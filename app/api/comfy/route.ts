@@ -59,12 +59,16 @@ async function pollRunStatus(
 
 export async function POST(req: Request) {
     try {
-        // @ts-ignore
-        const {workflow_id, prompt, files} = req.body;
+        const {workflow_id, prompt, files} = await req.json();
+        console.log(`Workflow ID: ${workflow_id}`);
+        console.log(`Prompt: ${prompt}`);
+        console.log(`Files: ${files}`);
+
         const run = await runWorkflow({workflow_id, prompt, files});
-        return NextResponse.json(run);
-        // console.log(run);
-        // const finalStatus = await pollRunStatus(workflow_id, run.id);
+        // return NextResponse.json(run);
+        console.log(run);
+        const finalStatus = await pollRunStatus(workflow_id, run.id);
+        return NextResponse.json(finalStatus);
         // console.log(`Final status: ${JSON.stringify(finalStatus, null, 2)}`);
         // console.log(`Output: ${JSON.stringify(finalStatus.output, null, 2)}`);
     } catch (error: any) {
@@ -73,7 +77,7 @@ export async function POST(req: Request) {
         } else {
             console.log(`An error occurred while polling: ${error.message}`);
         }
-        return NextResponse.json(error.message);
+        return NextResponse.error();
     }
 
 }

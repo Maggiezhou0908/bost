@@ -4,6 +4,7 @@ import { useState, useCallback, useMemo, ChangeEvent } from 'react'
 import toast from 'react-hot-toast'
 import LoadingDots from './loading-dots'
 import { PutBlobResult } from '@vercel/blob'
+import Image from 'next/image'
 
 export default function Uploader() {
   const [data, setData] = useState<{
@@ -15,9 +16,70 @@ export default function Uploader() {
 
   const [dragActive, setDragActive] = useState(false)
 
+  const [rmbgUrl, setRmbgUrl] = useState('' as string)
+
   const getFilenameFromUrl = (url:string) => {
     let match = url.match(/^.*\/([^?#]*)\??.*$/);
     return match ? match[1] : null;
+  }
+  const removeBg = async (url:string) => {
+    toast('ai is working , please wait')
+    const fileName = getFilenameFromUrl(url)
+    const files = {}
+    // @ts-ignore
+    files[`/input/${fileName}`] = url
+    try{
+      const removeResponse = await fetch('/api/comfy', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          'workflow_id': 'kqO68KnfWiR0-qHl1JPi4',
+          'prompt': {
+            "1": {
+              "inputs": {
+                "image": fileName,
+                "upload": "image"
+              },
+              "class_type": "LoadImage"
+            },
+            "2": {
+              "inputs": {},
+              "class_type": "BRIA_RMBG_ModelLoader_Zho"
+            },
+            "3": {
+              "inputs": {
+                "image": [
+                  "1",
+                  0
+                ],
+                "rmbgmodel": [
+                  "2",
+                  0
+                ]
+              },
+              "class_type": "BRIA_RMBG_Zho"
+            },
+            "4": {
+              "inputs": {
+                "images": [
+                  "3",
+                  0
+                ],
+                "filename_prefix": "ComfyUI"
+              },
+              "class_type": "SaveImage"
+            }
+          },
+          files: files,
+        })
+      })
+        const {output} = await removeResponse.json()
+      setRmbgUrl(output[0].url)
+      toast('remove bg is success')
+    }catch(e){
+      console.error(e)
+    }
+
   }
 
   const onChangePicture = useCallback(
@@ -46,6 +108,10 @@ export default function Uploader() {
   }, [data.image, saving])
 
   return (
+      <>
+        {
+          rmbgUrl ? <Image src={rmbgUrl} width={200} height={200} alt={'test'} /> : null
+        }
     <form
       className="grid gap-6"
       onSubmit={async (e) => {
@@ -57,114 +123,61 @@ export default function Uploader() {
           body: file,
         }).then(async (res) => {
           if (res.status === 200) {
-            const uploadRes = (await res.json()) as PutBlobResult;
-            console.log(uploadRes)
-            return uploadRes
-            // toast(
-            //   (t: { id: string }
-            //     ) => (
-            //     <div className="relative">
-            //       <div className="p-2">
-            //         <p className="font-semibold text-gray-900">
-            //           File uploaded!
-            //         </p>
-            //         <p className="mt-1 text-sm text-gray-500">
-            //           Your file has been uploaded to{' '}
-            //           <a
-            //             className="font-medium text-gray-900 underline"
-            //             href={url}
-            //             target="_blank"
-            //             rel="noopener noreferrer"
-            //           >
-            //             {url}
-            //           </a>
-            //         </p>
-            //       </div>
-            //       <button
-            //         onClick={() => toast.dismiss(t.id)}
-            //         className="absolute top-0 -right-2 inline-flex text-gray-400 focus:outline-none focus:text-gray-500 rounded-full p-1.5 hover:bg-gray-100 transition ease-in-out duration-150"
-            //       >
-            //         <svg
-            //           className="h-5 w-5"
-            //           viewBox="0 0 20 20"
-            //           fill="currentColor"
-            //         >
-            //           <path
-            //             fillRule="evenodd"
-            //             d="M5.293 5.293a1 1 0 011.414 0L10
-            //               8.586l3.293-3.293a1 1 0 111.414 1.414L11.414
-            //               10l3.293 3.293a1 1 0 01-1.414 1.414L10
-            //               11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586
-            //               10 5.293 6.707a1 1 0 010-1.414z"
-            //             clipRule="evenodd"
-            //           />
-            //         </svg>
-            //       </button>
-            //     </div>
-            //   ),
-            //   { duration: 300000 }
-            // )
+            const {url} = (await res.json()) as PutBlobResult;
+            // return uploadRes
+            toast(
+              (t: { id: string }
+                ) => (
+                <div className="relative">
+                  <div className="p-2">
+                    <p className="font-semibold text-gray-900">
+                      File uploaded!
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Your file has been uploaded to{' '}
+                      <a
+                        className="font-medium text-gray-900 underline"
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {url}
+                      </a>
+                    </p>
+                  </div>
+                  <button
+                    onClick={()=>{
+                      toast.dismiss(t.id);
+                      removeBg(url)
+                    }}
+                    className="absolute top-0 -right-2 inline-flex text-gray-400 focus:outline-none focus:text-gray-500 rounded-full p-1.5 hover:bg-gray-100 transition ease-in-out duration-150"
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 5.293a1 1 0 011.414 0L10
+                          8.586l3.293-3.293a1 1 0 111.414 1.414L11.414
+                          10l3.293 3.293a1 1 0 01-1.414 1.414L10
+                          11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586
+                          10 5.293 6.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ),
+              { duration: 300000 }
+            )
           } else {
             const error = await res.text()
             toast.error(error)
           }
           setSaving(false)
         })
-            .then((data) => {
-              // @ts-ignore
-              const {url} = data;
-              const fileName = getFilenameFromUrl(url)
-              const files = {}
-              // @ts-ignore
-              files[`/input/${fileName}`] = url
-              return fetch('/api/comfy', {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify({
-                  workflow_id: 'kqO68KnfWiR0-qHl1JPi4',
-                  prompt: {
-                    "1": {
-                      "inputs": {
-                        "image": fileName,
-                        "upload": "image"
-                      },
-                      "class_type": "LoadImage"
-                    },
-                    "2": {
-                      "inputs": {},
-                      "class_type": "BRIA_RMBG_ModelLoader_Zho"
-                    },
-                    "3": {
-                      "inputs": {
-                        "image": [
-                          "1",
-                          0
-                        ],
-                        "rmbgmodel": [
-                          "2",
-                          0
-                        ]
-                      },
-                      "class_type": "BRIA_RMBG_Zho"
-                    },
-                    "4": {
-                      "inputs": {
-                        "images": [
-                          "3",
-                          0
-                        ],
-                        "filename_prefix": "ComfyUI"
-                      },
-                      "class_type": "SaveImage"
-                    }
-                  },
-                  files: files,
-                }),
-              })
-            })
-            .then((comfyRes)=>{
-              console.log('comfyRes', comfyRes)
-            })
       }}
     >
       <div>
@@ -288,6 +301,8 @@ export default function Uploader() {
           <p className="text-sm">Confirm upload</p>
         )}
       </button>
+
     </form>
+      </>
   )
 }
