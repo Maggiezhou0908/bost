@@ -59,7 +59,7 @@ export default function Uploader() {
           if (res.status === 200) {
             const uploadRes = (await res.json()) as PutBlobResult;
             console.log(uploadRes)
-            // return uploadRes
+            return uploadRes
             // toast(
             //   (t: { id: string }
             //     ) => (
