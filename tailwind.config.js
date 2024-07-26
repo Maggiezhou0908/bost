@@ -7,10 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        default: ['var(--font-inter)'],
-      },
     },
   },
-  plugins: [],
+  plugins: [
+    "@tailwindcss/forms",
+    "@tailwindcss/typography",
+    "@tailwindcss/aspect-ratio"
+  ],
 }
