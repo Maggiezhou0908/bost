@@ -52,7 +52,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Preview = ({isOpen, onClose}) => {
+const Preview = ({isOpen, onClose}:{isOpen: boolean, onClose: (val?: string) => void}) => {
 
   const handleClose = () => {
     onClose(''); // 清空输入的文本
