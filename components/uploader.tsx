@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useCallback, useMemo, ChangeEvent } from 'react'
+import {useState, useCallback, useMemo, ChangeEvent, useRef} from 'react'
 import toast from 'react-hot-toast'
 import LoadingDots from './loading-dots'
 import { PutBlobResult } from '@vercel/blob'
 import Image from 'next/image'
+
+const WORKFLOW_ID = 'kqO68KnfWiR0-qHl1JPi4';
 
 export default function Uploader() {
   const [data, setData] = useState<{
@@ -18,12 +20,62 @@ export default function Uploader() {
 
   const [rmbgUrl, setRmbgUrl] = useState('' as string)
 
+  const runWorkflow = useRef('');
+
   const getFilenameFromUrl = (url:string) => {
     let match = url.match(/^.*\/([^?#]*)\??.*$/);
     return match ? match[1] : null;
   }
+
+  const startPollRunStatus = async () => {
+    for (let attempt = 0; attempt < 30; attempt++) {
+      try {
+        const statusRes = await fetch(`/api/comfy?${new URLSearchParams({
+          workflow_id: WORKFLOW_ID,
+          run_id: runWorkflow.current
+        }).toString()}`)
+        const statusJson = await statusRes.json()
+        console.log('statusJson', statusJson)
+        toast.loading(`workflow is work doing => ${statusJson.status}`, {
+          duration: 10000
+        })
+        if (statusJson.status === "COMPLETED") {
+          // toast.success('workflow is work success')
+          // return status;
+          const output = statusJson.output;
+            setRmbgUrl(output[0].url) // set rmbg url
+          return output
+        }else if(statusJson.status === "ERROR") {
+          toast.error('workflow is work fail')
+        }
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    // for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    //   try {
+    //     const status : any = await getRunStatus(workflow_id, run_id);
+    //     console.log(`Attempt ${attempt + 1}: Run status is ${status.status}`);
+    //
+    //     if (status.status === "COMPLETED" || status.status === "ERROR") {
+    //       return status;
+    //     }
+    //
+    //     await new Promise((resolve) => setTimeout(resolve, delay));
+    //   } catch (error: any) {
+    //     console.error(`Error during polling: ${error.message}`);
+    //     throw error;
+    //   }
+    // }
+    //
+    // throw new Error("Max polling attempts reached");
+  }
+
   const removeBg = async (url:string) => {
-    toast('ai is working , please wait')
+    toast('ai is working , please wait', {
+      duration: 10000
+    })
     const fileName = getFilenameFromUrl(url)
     const files = {}
     // @ts-ignore
@@ -33,7 +85,7 @@ export default function Uploader() {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          'workflow_id': 'kqO68KnfWiR0-qHl1JPi4',
+          'workflow_id': WORKFLOW_ID,
           'prompt': {
             "1": {
               "inputs": {
@@ -72,11 +124,14 @@ export default function Uploader() {
           },
           files: files,
         })
-      })
-        const {output} = await removeResponse.json()
-      setRmbgUrl(output[0].url)
-      toast('remove bg is success')
+      });
+      const resJson = await removeResponse.json()
+      runWorkflow.current = resJson.id
+      await startPollRunStatus()
+      // setRmbgUrl(output[0].url)
+      toast.success('workflow is work start')
     }catch(e){
+      toast.error('workflow is work fail')
       console.error(e)
     }
 

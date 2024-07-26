@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import fetch from 'node-fetch'
 
 async function runWorkflow(body: any) {
@@ -57,7 +57,7 @@ async function pollRunStatus(
     throw new Error("Max polling attempts reached");
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         const {workflow_id, prompt, files} = await req.json();
         console.log(`Workflow ID: ${workflow_id}`);
@@ -65,10 +65,8 @@ export async function POST(req: Request) {
         console.log(`Files: ${files}`);
 
         const run = await runWorkflow({workflow_id, prompt, files});
-        // return NextResponse.json(run);
-        console.log(run);
-        const finalStatus = await pollRunStatus(workflow_id, run.id);
-        return NextResponse.json(finalStatus);
+        console.log(`Run ID: ${run.id}`);
+        return NextResponse.json(run);
         // console.log(`Final status: ${JSON.stringify(finalStatus, null, 2)}`);
         // console.log(`Output: ${JSON.stringify(finalStatus.output, null, 2)}`);
     } catch (error: any) {
@@ -80,4 +78,25 @@ export async function POST(req: Request) {
         return NextResponse.error();
     }
 
+}
+
+export async function GET(req: NextRequest) {
+    try {
+        console.log('GET', req)
+        const {searchParams} = req.nextUrl
+        // @ts-ignore
+        const workflow_id = searchParams.get('workflow_id') as string;
+        const  run_id = searchParams.get('run_id') as string;
+        console.log('workflow_id', workflow_id)
+        console.log('run_id', run_id)
+        const finalStatus = await getRunStatus(workflow_id, run_id);
+        return NextResponse.json(finalStatus);
+    } catch (error: any) {
+        if (error.message === "Max polling attempts reached") {
+            console.log(`Polling timed out: ${error.message}`);
+        } else {
+            console.log(`An error occurred while polling: ${error.message}`);
+        }
+        return NextResponse.error();
+    }
 }
