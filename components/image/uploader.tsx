@@ -154,14 +154,17 @@ export default function Uploader() {
       className="grid gap-6"
       onSubmit={async (e) => {
         e.preventDefault()
+        // toast.loading(`start upload`)
         setSaving(true)
         fetch('/api/upload', {
           method: 'POST',
           headers: { 'content-type': file?.type || 'application/octet-stream' },
           body: file,
         }).then(async (res) => {
+          console.log('res', res)
           if (res.status === 200) {
             const {url} = (await res.json()) as PutBlobResult;
+            console.log('url', url)
             // return uploadRes
             toast(
               (t: { id: string }

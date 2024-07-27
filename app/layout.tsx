@@ -2,7 +2,7 @@ import './globals.css'
 import type {ReactNode} from 'react'
 import {Navbar} from "@/components/Navbar";
 import {Sidebar} from "@/components/Sidebar";
-import {ContentList} from "@/components/ContentList";
+import {Toaster} from 'react-hot-toast'
 
 
 export const metadata = {
@@ -23,6 +23,7 @@ export default function RootLayout({
         <div className='flex'>
           <Sidebar/>
           {children}
+          <Toaster/>
         </div>
       </>
     </body>
