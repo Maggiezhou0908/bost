@@ -12,16 +12,16 @@ function classNames(...classes: string[]) {
 
 export function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-[#1F1E30] border-b border-white w-full fixed z-50">
+    <Disclosure as="nav" className="bg-[#1F1E30] w-full fixed z-10">
       {({}) => (
         <>
           <div className="w-auto">
-            <div className="flex h-14 justify-between px-4">
+            <div className="flex h-16 justify-between px-8 box-border border-b border-gray-400">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center  ">
                   <Image
                     className="h-7 w-auto"
-                    src="/logo.png"
+                    src="/logo@2x.png"
                     alt="BOST"
                     width={120}
                     height={20}
@@ -33,20 +33,20 @@ export function Navbar() {
               <div className="flex items-center">
 
                 <div className="flex-shrink-0 ml-3">
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-amber-900 text-white">
+                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     Your gains
                   </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-amber-900 text-white">
+                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     Image Editor
                   </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-amber-900 text-white">
+                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     Text Editor
                   </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-amber-900 text-white">
+                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     Case Study
                   </Link>
                 </div>
-                <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
+                <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center pr-8">
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
