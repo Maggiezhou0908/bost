@@ -18,8 +18,8 @@ export function Sidebar() {
     <div className="w-[260px] min-w-[260px] px-4 bg-[#1F1E30] h-screen overflow-y-auto">
       <div className={'w-full h-16'}></div>
       <div className={'w-full h-10'}></div>
-      <Link href={'/'}>
-        <div className={getActiveClass('/')}>
+      <Link href={'/home'}>
+        <div className={getActiveClass('/home')}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                stroke="currentColor"
                className="w-6 h-6 mr-2 inline-block">
