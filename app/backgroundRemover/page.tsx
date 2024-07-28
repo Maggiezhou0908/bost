@@ -50,7 +50,7 @@ export default function BackgroundRemover() {
     const localRemoveFile = await LocalDB.remove.get(id)
     if (localRemoveFile) {
       toast.dismiss(_toast)
-      loadRemoveUrl(localRemoveFile[0].url)
+      loadRemoveUrl(localRemoveFile.url)
       console.log('use cache remove file', localRemoveFile)
       return
     }
@@ -110,7 +110,7 @@ export default function BackgroundRemover() {
       console.log(workflowResult)
       if (workflowResult.status === 'COMPLETED') {
         const output = workflowResult.output
-        await LocalDB.remove.set(id, output)
+        await LocalDB.remove.set(id, output[0])
         loadRemoveUrl(output[0].url)
         toast.success('workflow is work success')
       } else {
@@ -191,9 +191,11 @@ export default function BackgroundRemover() {
         </div>
         <PageWarp>
           <div className={'w-full h-full flex items-center justify-center'}>
+
             {
               sourceUrl ?
                 <div>
+                  <div className={'w-full h-16'}></div>
                   <div className={'w-[648px] h-[376px] relative z-0 overflow-hidden box-bg'}>
                     {
                       sourceUrl ?
@@ -233,7 +235,7 @@ export default function BackgroundRemover() {
                   }
                 </div> :
                 <>
-                  <div>
+                <div>
                     <div className={'flex justify-center'}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                            stroke="currentColor" className="size-12 text-white">

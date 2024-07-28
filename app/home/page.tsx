@@ -1,3 +1,5 @@
+'use client'
+
 import {PageWarp} from "@/components/PageWarp";
 import Image from "next/image";
 import {Navbar} from "@/components/Navbar";

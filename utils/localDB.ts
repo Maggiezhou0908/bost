@@ -74,5 +74,8 @@ export default {
   }),
   remove: new LocalDB({
     name: '_boost_remove'
+  }),
+  generation: new LocalDB({
+    name: '_boost_generation'
   })
 }
