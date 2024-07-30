@@ -47,7 +47,7 @@ export default function Index(){
           </div>
         </div>
       </div>
-      <div className="w-auto h-screen bg-[#D2FF04]">
+      <div className="w-auto h-screen slideshow">
         index
       </div>
       <div className="w-auto h-screen bg-black" id={'YourGains'}>

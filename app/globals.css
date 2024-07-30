@@ -14,6 +14,38 @@
 .box-bg{
   background: url("../public/bg.jpeg") center repeat;
 }
+
 .gen-dialog{
   background: rgba(0,0,0,.7);
+}
+
+.slideshow {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slideshow::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slideshow 14s infinite linear;
+}
+
+@keyframes slideshow {
+  0% { background-image: url('../public/index/logo.jpeg'); }
+  16% { background-image: url('../public/index/logo-1.jpeg'); }
+  32% { background-image: url('../public/index/logo-2.jpeg'); }
+  48% { background-image: url('../public/index/logo-3.jpeg'); }
+  64% { background-image: url('../public/index/logo-4.jpeg'); }
+  80% { background-image: url('../public/index/logo-5.jpeg'); }
+  96% { background-image: url('../public/index/logo-6.jpeg'); }
+  100% { background-image: url('../public/index/logo.jpeg'); }
 }
