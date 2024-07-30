@@ -181,6 +181,8 @@ export default function BackgroundRemover() {
           <div className={'w-full h-8'}></div>
           <div className={'text-white text-sm'}>Upload Image</div>
           <Uploader
+            submitText={'Remove Background'}
+            preSubmit={()=> true}
             onSuccess={handleUploadSuccess}
             onChange={() => {
               setSourceUrl('')

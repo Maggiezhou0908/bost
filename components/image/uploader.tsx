@@ -8,7 +8,7 @@ import md5 from 'crypto-js/md5'
 import encHex from 'crypto-js/enc-hex';
 import LocalDB from "@/utils/localDB";
 
-export default function Uploader({onSuccess, onChange}: { onSuccess: ({id, url}:{id:string, url: string}) => void, onChange: () => void }) {
+export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {submitText: string, preSubmit: ()=> boolean, onSuccess: ({id, url}:{id:string, url: string}) => void, onChange: () => void }) {
   const [data, setData] = useState<{
     image: string | null
   }>({
@@ -49,6 +49,11 @@ export default function Uploader({onSuccess, onChange}: { onSuccess: ({id, url}:
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+
+    if(!preSubmit()){
+      return
+    }
+
     let localUploadedFile = await LocalDB.upload.get(`${fileMd5.current}`)
     if (localUploadedFile) {
       console.log('use cache upload file', localUploadedFile)
@@ -102,7 +107,7 @@ export default function Uploader({onSuccess, onChange}: { onSuccess: ({id, url}:
         <div>
           <label
             htmlFor="image-upload"
-            className="group relative mt-2 flex h-52 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 shadow-sm transition-all bg-[#333249]"
+            className="group relative mt-2 flex h-40 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 shadow-sm transition-all bg-[#333249]"
           >
             <div
               className="absolute z-[5] h-full w-full rounded-md"
@@ -200,7 +205,7 @@ export default function Uploader({onSuccess, onChange}: { onSuccess: ({id, url}:
             {saving ? (
               <LoadingDots color="#808080"/>
             ) : (
-              <p className="text-sm">Remove Background</p>
+              <p className="text-sm">{submitText}</p>
             )}
           </button>
         </div>
