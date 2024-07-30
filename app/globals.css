@@ -40,12 +40,12 @@
 }
 
 @keyframes slideshow {
-  0% { background-image: url('../public/index/logo.jpeg'); }
-  16% { background-image: url('../public/index/logo-1.jpeg'); }
-  32% { background-image: url('../public/index/logo-2.jpeg'); }
-  48% { background-image: url('../public/index/logo-3.jpeg'); }
-  64% { background-image: url('../public/index/logo-4.jpeg'); }
-  80% { background-image: url('../public/index/logo-5.jpeg'); }
-  96% { background-image: url('../public/index/logo-6.jpeg'); }
-  100% { background-image: url('../public/index/logo.jpeg'); }
+  0% { background-image: url('../public/index/Logo.jpeg'); }
+  16% { background-image: url('../public/index/Logo-1.jpeg'); }
+  32% { background-image: url('../public/index/Logo-2.jpeg'); }
+  48% { background-image: url('../public/index/Logo-3.jpeg'); }
+  64% { background-image: url('../public/index/Logo-4.jpeg'); }
+  80% { background-image: url('../public/index/Logo-5.jpeg'); }
+  96% { background-image: url('../public/index/Logo-6.jpeg'); }
+  100% { background-image: url('../public/index/Logo.jpeg'); }
 }
