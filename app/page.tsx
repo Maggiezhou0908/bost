@@ -1,9 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Index(){
   return (
     <>
+      <Head>
+        <link rel="preload" as="image" href="/index/Logo.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-1.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-2.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-3.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-4.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-5.jpeg"/>
+        <link rel="preload" as="image" href="/index/Logo-6.jpeg"/>
+      </Head>
       <div className={'bg-white w-full fixed z-10'}>
         <div className="w-auto">
           <div className="flex h-16 justify-between px-8 box-border">

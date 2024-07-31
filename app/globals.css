@@ -36,7 +36,8 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  animation: slideshow 14s infinite linear;
+  animation: slideshow 21s infinite linear;
+  transition: background-image 0s;
 }
 
 @keyframes slideshow {
@@ -48,4 +49,8 @@
   80% { background-image: url('../public/index/Logo-5.jpeg'); }
   96% { background-image: url('../public/index/Logo-6.jpeg'); }
   100% { background-image: url('../public/index/Logo.jpeg'); }
+}
+
+.text-generation-wrap{
+  white-space: pre-line;
 }

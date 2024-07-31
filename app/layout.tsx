@@ -15,15 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-    <head>
-      <link rel="preload" as="image" href="../public/index/Logo.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-1.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-2.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-3.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-4.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-5.jpeg"/>
-      <link rel="preload" as="image" href="../public/index/Logo-6.jpeg"/>
-    </head>
     <body className={'h-full'}>
     <>
       {children}
