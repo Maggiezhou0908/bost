@@ -53,3 +53,7 @@
 .text-generation-wrap{
   white-space: pre-line;
 }
+.bb-wrap{
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+}

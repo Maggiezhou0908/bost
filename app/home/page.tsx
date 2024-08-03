@@ -5,6 +5,7 @@ import Image from "next/image";
 import {Navbar} from "@/components/Navbar";
 import {Sidebar} from "@/components/Sidebar";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function Home() {
   return (
@@ -79,21 +80,21 @@ export default function Home() {
                   <div className={'text-xs text-white text-center mt-2'}>Title Generation</div>
                 </Link>
               </div>
-              <div className={'mr-4'}>
+              <div className={'mr-4'} onClick={()=>{toast.error('coming soon')}}>
                 <div
                   className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
                   <Image src={'/home/Title_Optimization.png'} alt={'Title Optimization'} width={80} height={72}/>
                 </div>
                 <div className={'text-xs text-white text-center mt-2'}>Title Optimization</div>
               </div>
-              <div className={'mr-4'}>
+              <div className={'mr-4'} onClick={()=>{toast.error('coming soon')}}>
                 <div
                   className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
                   <Image src={'/home/Product_Description.png'} alt={'Product Description'} width={80} height={72}/>
                 </div>
                 <div className={'text-xs text-white text-center mt-2'}>Product Description</div>
               </div>
-              <div className={''}>
+              <div className={''} onClick={()=>{toast.error('coming soon')}}>
                 <div
                   className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
                   <Image src={'/home/Image_Copywriting.png'} alt={'Image Copywriting'} width={80} height={72}/>
