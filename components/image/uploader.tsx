@@ -8,7 +8,24 @@ import md5 from 'crypto-js/md5'
 import encHex from 'crypto-js/enc-hex';
 import LocalDB from "@/utils/localDB";
 
-export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {submitText: string, preSubmit: ()=> boolean, onSuccess: ({id, url}:{id:string, url: string}) => void, onChange: () => void }) {
+export default function Uploader({
+  fetching,
+  submitText,
+  preSubmit,
+  onSuccess,
+  onFail,
+  onChange
+}: {
+  fetching: boolean,
+  submitText: string,
+  preSubmit: ()=> boolean,
+  onSuccess: ({id, url}:{id:string, url: string}) => void,
+  onFail: () => void,
+  onChange: () => void
+}) {
+
+  console.log('fetching =>', fetching)
+
   const [data, setData] = useState<{
     image: string | null
   }>({
@@ -49,8 +66,8 @@ export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-
     if(!preSubmit()){
+      onFail && onFail()
       return
     }
 
@@ -63,7 +80,7 @@ export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {
       })
       return
     }
-    setSaving(true)
+
     fetch('/api/upload', {
       method: 'POST',
       headers: {'content-type': file?.type || 'application/octet-stream'},
@@ -82,8 +99,8 @@ export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {
       } else {
         const error = await res.text()
         toast.error(error)
+        onFail && onFail()
       }
-      setSaving(false)
     })
   }
 
@@ -195,14 +212,14 @@ export default function Uploader({submitText, preSubmit, onSuccess, onChange}: {
 
         <div className={'absolute inset-x-0 bottom-0 p-4'}>
           <button
-            disabled={saveDisabled}
+            disabled={fetching}
             className={`${
-              saveDisabled
+              fetching
                 ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
                 : 'border-[#D2FF04] bg-[#D2FF04] text-black hover:text-gray-600'
             } flex h-10 w-full items-center justify-center rounded-full border text-sm transition-all focus:outline-none`}
           >
-            {saving ? (
+            {fetching ? (
               <LoadingDots color="#808080"/>
             ) : (
               <p className="text-sm">{submitText}</p>

@@ -36,8 +36,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  animation: slideshow 21s infinite linear;
-  transition: background-image 0s;
+  animation: slideshow 21s infinite ease-in;
 }
 
 @keyframes slideshow {

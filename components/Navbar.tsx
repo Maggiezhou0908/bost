@@ -18,32 +18,28 @@ export function Navbar() {
           <div className="w-auto">
             <div className="flex h-16 justify-between px-8 box-border border-b border-gray-400">
               <div className="flex">
-                <div className="flex flex-shrink-0 items-center  ">
-                  <Image
-                    className="h-7 w-auto"
-                    src="/logo@2x.png"
-                    alt="BOST"
-                    width={120}
-                    height={20}
-                    priority
-                  />
+                <div className="flex flex-shrink-0 items-center">
+                  <Link href={'/'}>
+                    <Image
+                      className="h-7 w-auto"
+                      src="/logo@2x.png"
+                      alt="BOST"
+                      width={120}
+                      height={20}
+                      priority
+                    />
+                  </Link>
                 </div>
 
               </div>
               <div className="flex items-center">
 
                 <div className="flex-shrink-0 ml-3">
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
-                    Your gains
+                  <Link href='/home' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
+                    Home
                   </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
-                    Image Editor
-                  </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
-                    Text Editor
-                  </Link>
-                  <Link href='./plan' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
-                    Case Study
+                  <Link href='/about' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
+                    About Us
                   </Link>
                 </div>
                 <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center pr-8">
@@ -74,26 +70,13 @@ export function Navbar() {
                         <Menu.Item>
                           {({active}) => (
                             <a
-                              href="./Order"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
-                              )}
-                            >
-                              我的订单
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({active}) => (
-                            <a
                               href="./login"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
                               )}
                             >
-                              退出登录
+                              logout
                             </a>
                           )}
                         </Menu.Item>

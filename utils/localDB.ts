@@ -75,7 +75,10 @@ export default {
   remove: new LocalDB({
     name: '_boost_remove'
   }),
-  generation: new LocalDB({
-    name: '_boost_generation'
+  imageGeneration: new LocalDB({
+    name: '_boost_image_generation'
+  }),
+  titleGeneration: new LocalDB({
+    name: '_boost_title_generation'
   })
 }

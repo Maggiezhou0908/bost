@@ -2,14 +2,17 @@
 
 import {PageWarp} from "@/components/PageWarp";
 import {Navbar} from "@/components/Navbar";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { RadioGroup } from '@headlessui/react'
 import CascadDropdown from "@/components/text/CascadDropdown";
-import { ChevronLeftIcon, SparklesIcon } from '@heroicons/react/20/solid'
 import classNames from "classnames";
 import Image from "next/image";
+import LoadingDots from "@/components/image/loading-dots";
+import LocalDB from "@/utils/localDB";
+import getUUID from "@/utils/getUUID";
+import NoContent from "@/components/base/NoContent";
 
 
 const platform = [
@@ -20,7 +23,6 @@ const platform = [
   { name: 'Shopee', selectedColor: 'ring-green-500', imgUrl: '/text/logo_xp.png' },
   { name: 'AliExpress', selectedColor: 'ring-green-500', imgUrl: '/text/logo_ae.png' },
   { name: 'Lazada', selectedColor: 'ring-green-500', imgUrl: '/text/logo_laz.png' },
-
 ]
 
 export default function TitleGeneration() {
@@ -29,8 +31,10 @@ export default function TitleGeneration() {
 
   const [text, setText] = useState('')
 
-  const [selectedColor, setSelectedColor] = useState(platform[0])
+  const [selectedColor, setSelectedColor] = useState<any>(null)
   const productTypeRef = useRef('')
+
+  const [fetching, setFetching] = useState(false)
 
   const pageInit = async () => {
 
@@ -38,17 +42,17 @@ export default function TitleGeneration() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    if(!selectedColor.name) return toast.error('please choose platform');
+    if(!selectedColor) return toast.error('please choose platform');
     if(!productTypeRef.current) return toast.error('please choose category');
-    if(! e.target.product_name.value) return toast.error('please input product name');
-    if(! e.target.advantages.value) return toast.error('please input advantages');
-    if(! e.target.keywords.value) return toast.error('please input keywords');
-    if(! e.target.tone.value) return toast.error('please choose tone');
-    if(! e.target.languagewrit.value) return toast.error('please choose language');
+    if(!e.target.product_name.value) return toast.error('please input product name');
+    if(!e.target.advantages.value) return toast.error('please input advantages');
+    if(!e.target.keywords.value) return toast.error('please input keywords');
+    if(!e.target.tone.value) return toast.error('please choose tone');
+    if(!e.target.languagewrit.value) return toast.error('please choose language');
 
+    setFetching(true)
     let reqData = {
-      platform: selectedColor.name || '',
+      platform: selectedColor?.name || '',
       product_type: productTypeRef.current,
       product_name: e.target.product_name.value,
       advantage:  e.target.advantages.value,
@@ -66,11 +70,15 @@ export default function TitleGeneration() {
       })
       const statusJson = await statusRes.json()
       toast.dismiss(_toast)
+      setFetching(false)
       setText(statusJson.choices[0].message.content)
+      let uuid = getUUID()
+      await LocalDB.titleGeneration.set(uuid, statusJson.choices[0].message.content)
       console.log('statusJson =>', statusJson)
     } catch (e) {
+      setFetching(false)
       toast.dismiss(_toast)
-      console.error(e)
+      toast.error('The system is abnormal, please try again later')
     }
   }
 
@@ -101,13 +109,10 @@ export default function TitleGeneration() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
               </svg>
 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                   stroke="currentColor"
-                   className="w-6 h-6 mr-2 inline-block">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
-              </svg>
-              Image Generation
+              <div className="w-6 h-6 mr-2 inline-block">
+                <Image src={'/icon/titlegeneration_big.png'} alt={''} width={24} height={24}/>
+              </div>
+              Text Generation
             </div>
           </Link>
           <div className={'w-full h-8'}></div>
@@ -136,7 +141,8 @@ export default function TitleGeneration() {
                         <RadioGroup.Label as="span" className="sr-only">
                           {platform.name}
                         </RadioGroup.Label>
-                        <Image className="w-auto m-auto" src={platform.imgUrl} alt="Choose your platform" width={100} height={100}/>
+                        <Image className="w-auto m-auto rounded-full" src={platform.imgUrl} alt="Choose your platform"
+                               width={48} height={48}/>
                       </RadioGroup.Option>
                     ))}
                   </div>
@@ -150,8 +156,9 @@ export default function TitleGeneration() {
                       className="text-red-500">*</span>
                     </label>
                     <div className="mt-2">
-                      <CascadDropdown onChange={(option)=>{
-                        console.log(option); productTypeRef.current = option }}/>
+                      <CascadDropdown onChange={(option) => {
+                        productTypeRef.current = option
+                      }}/>
                     </div>
                   </div>
 
@@ -162,7 +169,7 @@ export default function TitleGeneration() {
                     </label>
                     <div className="mt-2">
                       <div
-                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 max-w">
+                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 max-w">
                         <input
                           type="text"
                           name="product_name"
@@ -181,13 +188,13 @@ export default function TitleGeneration() {
                     </label>
                     <div className="mt-2">
                       <div
-                        className="text-gray-400  rounded-md py-1.5 px-3  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-60">
+                        className="text-white rounded-md py-1.5 px-3  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-60">
                       <textarea
                         id="advantages"
                         name="advantages"
                         rows={3}
-                        className="block w-full border-00 sm:text-sm sm:leading-6 bg-transparent"
-                        defaultValue={'Please enter the advantages of your product, such as cost-effectiveness and good quality.'}
+                        className="block w-full border-00 bg-transparent"
+                        placeholder={'Please enter the advantages of your product, such as cost-effectiveness and good quality.'}
                       />
                       </div>
                     </div>
@@ -199,13 +206,13 @@ export default function TitleGeneration() {
                     </label>
                     <div className="mt-2">
                       <div
-                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-green-600 max-w">
+                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 max-w">
                         <input
                           type="text"
                           name="keywords"
                           id="keywords"
                           autoComplete="keywords"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400"
                           placeholder="Enter the keywords you want to rank for. Use commas to separate them."
                         />
                       </div>
@@ -253,20 +260,35 @@ export default function TitleGeneration() {
             </div>
             <div>
               <button
-                type={"submit"}
-                className={`flex h-10 w-full items-center justify-center rounded-full border text-sm transition-all focus:outline-none`}
+                disabled={fetching}
+                className={`${
+                  fetching
+                    ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
+                    : 'border-[#D2FF04] bg-[#D2FF04] text-black hover:text-gray-600'
+                } flex h-10 w-full items-center justify-center rounded-full border text-sm transition-all focus:outline-none`}
               >
-                <p className="text-sm">submit</p>
+                {fetching ? (
+                  <LoadingDots color="#808080"/>
+                ) : (
+                  <p className="text-sm">generation</p>
+                )}
               </button>
             </div>
+            <div className={'w-full h-4'}></div>
           </form>
         </div>
         <PageWarp>
-          <div className={'w-full h-16'}></div>
-          <div className={'w-full h-4'}></div>
-          <div className={'text-generation-wrap text-lg text-white'}>
-            {text}
-          </div>
+          {
+            !text ? <NoContent isFullScreen={true}/> :
+              <>
+                <div className={'w-full h-16'}></div>
+                <div className={'w-full h-4'}></div>
+                <div className={'text-generation-wrap text-lg text-white'}>
+                  {text}
+                </div>
+              </>
+
+          }
         </PageWarp>
       </div>
     </>

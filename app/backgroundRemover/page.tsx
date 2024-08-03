@@ -7,9 +7,9 @@ import Uploader from "@/components/image/uploader";
 import {useRef, useState} from "react";
 import toast from "react-hot-toast";
 import LocalDB from "@/utils/localDB";
-import Image from "next/image";
 import classNames from "classnames";
-
+import NoContent from "@/components/base/NoContent";
+import Image from "next/image";
 const WORKFLOW_ID = 'kqO68KnfWiR0-qHl1JPi4';
 
 
@@ -18,6 +18,7 @@ export default function BackgroundRemover() {
 
   const runWorkflow = useRef('');
 
+  const [fetching, setFetching] = useState(false);
   const [sourceUrl, setSourceUrl] = useState<string>('')
   const [removeUrl, setRemoveUrl] = useState<string>('')
   const [removeUrlLoaded, setRemoveUrlLoaded] = useState<boolean>(false)
@@ -52,6 +53,7 @@ export default function BackgroundRemover() {
       toast.dismiss(_toast)
       loadRemoveUrl(localRemoveFile.url)
       console.log('use cache remove file', localRemoveFile)
+      setFetching(false)
       return
     }
     const fileName = getFilenameFromUrl(url)
@@ -113,12 +115,15 @@ export default function BackgroundRemover() {
         await LocalDB.remove.set(id, output[0])
         loadRemoveUrl(output[0].url)
         toast.success('workflow is work success')
+        setFetching(false)
       } else {
         toast.error('workflow is work fail')
+        setFetching(false)
       }
     } catch (e) {
       toast.dismiss(_toast)
       toast.error('workflow is work fail')
+      setFetching(false)
     }
 
   }
@@ -152,6 +157,9 @@ export default function BackgroundRemover() {
     link.click();
   }
 
+  const handleUploadFail = () => {
+    setFetching(false)
+  }
 
   return (
     <>
@@ -169,12 +177,9 @@ export default function BackgroundRemover() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
               </svg>
 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                   stroke="currentColor"
-                   className="w-6 h-6 mr-2 inline-block">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
-              </svg>
+              <div className="w-6 h-6 mr-2 inline-block">
+                <Image src={'/icon/removebg_big.png'} alt={''} width={24} height={24}/>
+              </div>
               Background Remover
             </div>
           </Link>
@@ -182,7 +187,9 @@ export default function BackgroundRemover() {
           <div className={'text-white text-sm'}>Upload Image</div>
           <Uploader
             submitText={'Remove Background'}
-            preSubmit={()=> true}
+            fetching={fetching}
+            onFail={handleUploadFail}
+            preSubmit={()=> { setFetching(true); return true }}
             onSuccess={handleUploadSuccess}
             onChange={() => {
               setSourceUrl('')
@@ -236,18 +243,7 @@ export default function BackgroundRemover() {
                       </div> : null
                   }
                 </div> :
-                <>
-                <div>
-                    <div className={'flex justify-center'}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                           stroke="currentColor" className="size-12 text-white">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                      </svg>
-                    </div>
-                    <div className={'text-sm text-white'}>No content yet, go generate it</div>
-                  </div>
-                </>
+                <NoContent isFullScreen={true} />
             }
 
           </div>

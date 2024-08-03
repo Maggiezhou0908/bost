@@ -47,18 +47,22 @@ export default function Home() {
             <div className={'text-white text-sm mb-4'}>Image Editor</div>
             <div className={'flex'}>
               <div className={'mr-4'}>
-                <div
-                  className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
-                  <Image src={'/home/Background_Remover.png'} alt={'Background Remover'} width={80} height={72}/>
-                </div>
-                <div className={'text-xs text-white text-center mt-2'}>Background Remover</div>
+                <Link href={'/backgroundRemover'}>
+                  <div
+                    className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
+                    <Image src={'/home/Background_Remover.png'} alt={'Background Remover'} width={80} height={72}/>
+                  </div>
+                  <div className={'text-xs text-white text-center mt-2'}>Background Remover</div>
+                </Link>
               </div>
               <div className={'mr-4'}>
-                <div
-                  className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
-                  <Image src={'/home/Image_Generation.png'} alt={'Image Generation'} width={80} height={72}/>
-                </div>
-                <div className={'text-xs text-white text-center mt-2'}>Image Generation</div>
+                <Link href={'/imageGeneration'}>
+                  <div
+                    className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
+                    <Image src={'/home/Image_Generation.png'} alt={'Image Generation'} width={80} height={72}/>
+                  </div>
+                  <div className={'text-xs text-white text-center mt-2'}>Image Generation</div>
+                </Link>
               </div>
             </div>
           </div>
@@ -67,11 +71,13 @@ export default function Home() {
             <div className={'text-white text-sm mb-4'}>Text Editor</div>
             <div className={'flex'}>
               <div className={'mr-4'}>
-                <div
-                  className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
-                  <Image src={'/home/Title_Generation.png'} alt={'Title Generation'} width={80} height={72}/>
-                </div>
-                <div className={'text-xs text-white text-center mt-2'}>Title Generation</div>
+                <Link href={'/titleGeneration'}>
+                  <div
+                    className={'w-40 h-28 bg-[#42415E] rounded-xl flex items-center justify-center box-border border border-solid border-[#42415E] cursor-pointer hover:border-[#D2FF04]'}>
+                    <Image src={'/home/Title_Generation.png'} alt={'Title Generation'} width={80} height={72}/>
+                  </div>
+                  <div className={'text-xs text-white text-center mt-2'}>Title Generation</div>
+                </Link>
               </div>
               <div className={'mr-4'}>
                 <div

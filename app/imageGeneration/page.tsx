@@ -1,22 +1,33 @@
 'use client'
-import { Description, Field, Input, Label, Textarea } from '@headlessui/react'
+import {Field, Input, Label, Textarea} from '@headlessui/react'
 import {PageWarp} from "@/components/PageWarp";
 import {Navbar} from "@/components/Navbar";
 import Link from "next/link";
 import Uploader from "@/components/image/uploader";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import toast from "react-hot-toast";
 import LocalDB from "@/utils/localDB";
 import Image from "next/image";
 import classNames from "classnames";
+import md5 from 'crypto-js/md5'
+import encHex from 'crypto-js/enc-hex';
+import { useSearchParams } from 'next/navigation'
+import localDB from "@/utils/localDB";
+import LoadingDots from "@/components/image/loading-dots";
+import Preview from "@/components/base/Preview";
+import NoContent from "@/components/base/NoContent";
+import {Suspense} from 'react'
 
 const WORKFLOW_ID = 'APicrcLui0J7auQukFm5k';
 
-export default function BackgroundRemover() {
+const ImageGeneration = () => {
 
+  const router = useSearchParams()
+  const imgKey = router.get('key');
 
   const runWorkflow = useRef('');
 
+  const [fetching, setFetching] = useState(false);
   const whatToSelectPrompt = useRef<HTMLInputElement>(null)
   const backgroundPrompt = useRef<HTMLInputElement>(null)
   const [sourceUrl, setSourceUrl] = useState<string>('')
@@ -35,16 +46,24 @@ export default function BackgroundRemover() {
     // 创建一个新的 Image 对象
     setGenerationArr(arr)
     setGenerationLoaded(true)
+    setShowDialog(true)
+  }
+
+  const handleUploadFail = () => {
+    setFetching(false)
   }
 
   const handleUploadSuccess = async ({id, url}: { id: string, url: string }) => {
     setSourceUrl(url);
-    const _toast = toast.loading('remove background is working , please wait')
-    const localGenerationFile = await LocalDB.generation.get(id)
+    const _toast = toast.loading('image generation is working , please wait')
+    // @ts-ignore
+    let textHash = md5((whatToSelectPrompt.current?.value + backgroundPrompt.current?.value) as string).toString(encHex)
+    const localGenerationFile = await LocalDB.imageGeneration.get(id + '_' + textHash)
     if (localGenerationFile) {
       toast.dismiss(_toast)
       loadGenerationUrl(localGenerationFile)
       console.log('use cache generation file', localGenerationFile)
+      setFetching(false)
       return
     }
     const fileName = getFilenameFromUrl(url)
@@ -190,7 +209,7 @@ export default function BackgroundRemover() {
             "97": {"inputs": {"Text": ""}, "class_type": "DF_Text_Box"},
             "98": {"inputs": {"prompt": whatToSelectPrompt.current?.value}, "class_type": "SeargePromptText"},
             "99": {"inputs": {"image": ["4", 0]}, "class_type": "ImageGenResolutionFromImage"},
-            "106": {"inputs": {"amount": 4, "samples": ["54", 0]}, "class_type": "RepeatLatentBatch"},
+            "106": {"inputs": {"amount": 2, "samples": ["54", 0]}, "class_type": "RepeatLatentBatch"},
             "108": {"inputs": {"images": ["61", 0], "filename_prefix": "ComfyUI"}, "class_type": "SaveImage"}
           },
           files: files,
@@ -203,16 +222,19 @@ export default function BackgroundRemover() {
       console.log(workflowResult)
       if (workflowResult.status === 'COMPLETED') {
         const output = workflowResult.output
-        await LocalDB.generation.set(id, output)
+        await LocalDB.imageGeneration.set(id + '_' + textHash, output)
         loadGenerationUrl(output)
         toast.success('workflow is work success')
+        setFetching(false)
       } else {
         toast.error('workflow is work fail')
+        setFetching(false)
       }
     } catch (e) {
       console.error('e ===>', e)
       toast.dismiss(_toast)
       toast.error('workflow is work fail')
+      setFetching(false)
     }
 
   }
@@ -247,6 +269,7 @@ export default function BackgroundRemover() {
       toast.error('Please input description')
       return false
     }
+    setFetching(true)
     return true
   }
 
@@ -257,6 +280,19 @@ export default function BackgroundRemover() {
     link.target = '_blank';
     link.click();
   }
+
+  useEffect(() => {
+    if(imgKey){
+      (async()=>{
+        let localImg = await localDB.remove.get(imgKey)
+        console.log('localImg =>', localImg)
+        if (localImg.url) {
+          console.log('localImg url=>', localImg.url)
+          setSourceUrl(localImg.url)
+        }
+      })()
+    }
+  }, [imgKey]);
 
 
   return (
@@ -275,27 +311,32 @@ export default function BackgroundRemover() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
               </svg>
 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                   stroke="currentColor"
-                   className="w-6 h-6 mr-2 inline-block">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
-              </svg>
+              <div className="w-6 h-6 mr-2 inline-block">
+                <Image src={'/icon/imagegeneration_big.png'} alt={''} width={24} height={24} />
+              </div>
               Image Generation
             </div>
           </Link>
           <div className={'w-full h-8'}></div>
-          <div className={'text-white text-sm'}>Upload Image</div>
-          <Uploader
-            submitText={'generation'}
-            preSubmit={handlePreSubmit}
-            onSuccess={handleUploadSuccess}
-            onChange={() => {
-              setSourceUrl('')
-              setGenerationArr([])
-              setGenerationLoaded(false)
-            }}
-          />
+          {
+            !imgKey ?
+              <>
+                <div className={'text-white text-sm'}>Upload Image</div>
+                <Uploader
+                  fetching={fetching}
+                  submitText={'generation'}
+                  preSubmit={handlePreSubmit}
+                  onFail={handleUploadFail}
+                  onSuccess={handleUploadSuccess}
+                  onChange={() => {
+                    setSourceUrl('')
+                    setGenerationArr([])
+                    setGenerationLoaded(false)
+                  }}
+                />
+              </>
+              : null
+          }
           <div className="w-full max-w-md">
             <Field>
               <Label className="text-sm/6 font-medium text-white">What to select</Label>
@@ -319,12 +360,34 @@ export default function BackgroundRemover() {
                   'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
                   'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
                 )}
-                placeholder={'exp: bag on the grass with lots of flowers next to it and blue sky, sunny day'}
+                placeholder={'exp: bag on the grass with lots of flowers next to it, sunny day'}
                 rows={2}
                 ref={backgroundPrompt}
               />
             </Field>
           </div>
+          {
+            !!imgKey ? <div className={'absolute inset-x-0 bottom-0 p-4'}>
+              <button
+                disabled={fetching}
+                className={`${
+                  fetching
+                    ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
+                    : 'border-[#D2FF04] bg-[#D2FF04] text-black hover:text-gray-600'
+                } flex h-10 w-full items-center justify-center rounded-full border text-sm transition-all focus:outline-none`}
+                onClick={async ()=>{
+                  if(!handlePreSubmit()) return;
+                  await handleUploadSuccess({id: imgKey, url: sourceUrl})
+                }}
+              >
+                {fetching ? (
+                  <LoadingDots color="#808080"/>
+                ) : (
+                  <p className="text-sm">{'generation'}</p>
+                )}
+              </button>
+            </div> : null
+          }
         </div>
         <PageWarp>
           <div className={'w-full h-full flex items-center justify-center'}>
@@ -334,22 +397,11 @@ export default function BackgroundRemover() {
                   <div className={'w-full h-16'}></div>
                   <div className={'w-[440px] h-[440px]'}>
                     {
-                      sourceUrl ? <Image src={sourceUrl} alt={''} width={440} height={440} /> : null
+                      sourceUrl ? <Image src={sourceUrl} alt={''} width={440} height={440}/> : null
                     }
                   </div>
                 </div> :
-                <>
-                  <div>
-                    <div className={'flex justify-center'}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                           stroke="currentColor" className="size-12 text-white">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                      </svg>
-                    </div>
-                    <div className={'text-sm text-white'}>No content yet, go generate it</div>
-                  </div>
-                </>
+                <NoContent isFullScreen={true} />
             }
 
           </div>
@@ -359,15 +411,14 @@ export default function BackgroundRemover() {
             <div className="w-[288px] min-w-[288px] px-4 bg-[#1F1E30] h-screen overflow-y-auto relative">
               <div className={'w-full h-16'}></div>
               <div className={'w-full h-4'}></div>
-              <div className="grid grid-cols-2 gap-1">
+              <div className="grid grid-cols-1 gap-1">
                 {
                   generationArr.map((item:any, index:number)=>{
                     return (
                       <div key={item.url} className={'bg-[#41405C] rounded p-1 text-center cursor-pointer'} onClick={()=>{
-                        setShowDialog(true);
-                        setShowIndex(index);
+                        downloadFile(item.url);
                       }}>
-                        <Image src={item.url} alt={''} width={120} height={120} className={'rounded'} />
+                        <Image src={item.url} alt={''} width={256} height={256} className={'rounded'} />
                       </div>
                     )
                   })
@@ -375,34 +426,18 @@ export default function BackgroundRemover() {
               </div>
             </div> : null
         }
-        {
-          showDialog ? <>
-            <div className={'fixed w-full h-full z-40 flex items-center justify-center gen-dialog'}>
-              <div className={'w-1/3 h-4/5 bg-white rounded relative'}>
-                <div className={'absolute right-0 top-0 cursor-pointer'} onClick={()=>{setShowDialog(false)}}>X</div>
-                <div className={'py-5 text-sm text-black text-center'}>Image Generator</div>
-                <div className={'px-10 text-center'}>
-                  <Image src={generationArr[showIndex].url} alt={''} width={472} height={472}/>
-                </div>
-                <div className="grid grid-cols-4 gap-1">
-                  {
-                    generationArr.map((item: any, index:number) => {
-                      return (
-                        <div key={item.url} className={'rounded p-1 text-center cursor-pointer'} onClick={() => {
-                          setShowIndex(index)
-                        }}>
-                          <Image src={item.url} alt={''} width={106} height={106} className={'rounded'}/>
-                        </div>
-                      )
-                    })
-                  }
-                </div>
-              </div>
-            </div>
-
-          </> : null
-        }
       </div>
+      <Preview imgList={generationArr} isOpen={showDialog} onClose={()=>{setShowDialog(false)}} />
     </>
   )
 }
+
+const _ImageGeneration = () => {
+  return (
+    <Suspense fallback={<div>loading</div>}>
+      <ImageGeneration />
+    </Suspense>
+  )
+}
+
+export default _ImageGeneration
