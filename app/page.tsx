@@ -53,7 +53,7 @@ export default function Index(){
             <div><Image src={'/index/slogan.png'} alt={'slogan'} width={540} height={37} /></div>
             <div className={'text-2xl my-4 text-black text-center uppercase'}>With AI e-commerce Marketing tool</div>
             <Link href={'/home'} >
-              <div className={'w-[150px] h-[36px] leading-[36px] text-center mx-auto shrink-0 bg-black rounded-full text-white'}>Try It Now</div>
+              <div className={'w-[160px] h-[48px] leading-[36px] text-center mx-auto shrink-0 bg-black rounded-full text-white'}>Try It Now</div>
             </Link>
           </div>
         </div>
