@@ -16,13 +16,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
     <head>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo.671a2d4d.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-1.1af157fb.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-2.d1e6c5d9.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-3.8cf243e3.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-4.8a74a330.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-5.f0513c7c.jpeg"/>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Logo-6.a7c1f127.jpeg"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%201.16e0f27e.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%202.c7ffb5af.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%203.7255d0a6.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%204.25bf89ee.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%205.cce93598.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%206.b6d8c69e.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%207.d41f9cfc.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%208.3218982f.png"/>
     </head>
     <body className={'h-full'}>
     <>
