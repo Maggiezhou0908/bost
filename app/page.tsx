@@ -47,10 +47,10 @@ export default function Index(){
           </div>
         </div>
       </div>
-      <div className="w-auto h-screen slideshow relative">
+      <div className="w-auto h-screen slideshow relative box-border">
         <div className={'absolute top-2/3 left-0 right-0 flex items-center justify-center'}>
           <div className={'px-4 w-[540px] h-[37px]'}>
-            <div><Image src={'/index/slogan.png'} alt={'slogan'} width={540} height={37} /></div>
+            <div className={'f-bodoni text-4xl text-center'}>your productivity, efficiency, quality</div>
             <div className={'text-2xl my-4 text-black text-center uppercase'}>With AI e-commerce Marketing tool</div>
             <Link href={'/home'} >
               <div className={'w-40 h-12 leading-none text-center mx-auto shrink-0 bg-black rounded-full text-white flex items-center justify-center'}>Try It Now</div>
@@ -239,7 +239,7 @@ export default function Index(){
       </div>
       <div className="w-auto bg-[#FF7BCA]">
         <div className={'text-6xl text-black text-center uppercase font-bold pt-24'}>GROW your BUsiness with AI</div>
-        <div className={'text-8xl text-black text-center uppercase'}>2,354,620</div>
+        <div className={'text-8xl text-black text-center uppercase py-8'}>2,354,620</div>
         <div className={'text-2xl text-black text-center uppercase pb-16'}>AI Photos Generated in the past 3 months.</div>
         <div className={'w-[1088px] h-[529px] bb-wrap mx-auto flex items-center'}>
           <div className={'uppercase w-80'}>

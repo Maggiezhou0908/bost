@@ -9,7 +9,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Preview = ({imgList, initIndex = 0, isOpen, onClose}:{imgList: [], initIndex: number, isOpen: boolean, onClose: (val?: string) => void}) => {
+const Preview = ({imgList, initIndex = 0, isOpen, onClose, hasBg = false}:{imgList: [], initIndex: number, isOpen: boolean, onClose: (val?: string) => void, hasBg?: boolean}) => {
 
   console.log('imgList =>', imgList)
 
@@ -79,7 +79,7 @@ const Preview = ({imgList, initIndex = 0, isOpen, onClose}:{imgList: [], initInd
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
               {imgList.map((image: any) => (
                 <Tab.Panel key={image.filename}>
-                  <div key={image.filename} className={'w-full h-96 flex items-center justify-center bg-amber-100 box-bg'}>
+                  <div key={image.filename} className={`w-full h-96 flex items-center justify-center ${hasBg?'box-bg':''}`}>
                     <img
                       src={image.url}
                       alt={''}

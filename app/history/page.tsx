@@ -212,7 +212,7 @@ export default function History() {
                     }
                   </div>
                   {
-                    removeDialogOpen ? <Preview initIndex={openRemoveIndex} imgList={removeImageList} isOpen={removeDialogOpen} onClose={()=>{setRemoveDialogOpen(false)}} /> : null
+                    removeDialogOpen ? <Preview hasBg={true} initIndex={openRemoveIndex} imgList={removeImageList} isOpen={removeDialogOpen} onClose={()=>{setRemoveDialogOpen(false)}} /> : null
                   }
                 </>
             }
