@@ -73,7 +73,7 @@ const Preview = ({imgList, initIndex = 0, isOpen, onClose}:{imgList: [], initInd
           <Tab.Group as="div" className="flex flex-col-reverse" selectedIndex={selectedIndex} onChange={setSelectedIndex}>
             <Tab.List style={{display: 'none'}}>
               {imgList.map((image:any, index:number) => (
-                <Tab>{index}</Tab>
+                <Tab key={image.filename}>{index}</Tab>
               ))}
             </Tab.List>
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
