@@ -2,19 +2,49 @@
 
 import {XMarkIcon, ArrowDownTrayIcon} from '@heroicons/react/20/solid'
 import {Tab} from '@headlessui/react'
+import {useState} from "react";
 
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Preview = ({imgList, isOpen, onClose}:{imgList: [], isOpen: boolean, onClose: (val?: string) => void}) => {
+const Preview = ({imgList, initIndex = 0, isOpen, onClose}:{imgList: [], initIndex: number, isOpen: boolean, onClose: (val?: string) => void}) => {
 
   console.log('imgList =>', imgList)
+
+  const [selectedIndex, setSelectedIndex] = useState(()=> initIndex)
+
+  const handleLeft = () => {
+    console.log(selectedIndex)
+    if(selectedIndex <= 0) return
+    setSelectedIndex(selectedIndex-1)
+  }
+
+  const handleRight = () => {
+    console.log(selectedIndex)
+    if(selectedIndex >= imgList.length -1) return
+    setSelectedIndex(selectedIndex+1)
+  }
 
   const handleClose = () => {
     onClose(''); // 清空输入的文本
   };
+
+  const getFilenameFromUrl = (url: string) => {
+    let match = url.match(/^.*\/([^?#]*)\??.*$/);
+    return match ? match[1] : null;
+  }
+
+  const downloadFile = () => {
+    let url = imgList[selectedIndex]['url'] || ''
+    if(!url) return
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = getFilenameFromUrl(url) as string;
+    link.target = '_blank';
+    link.click();
+  }
 
   if (!isOpen) {
     return null;
@@ -40,46 +70,41 @@ const Preview = ({imgList, isOpen, onClose}:{imgList: [], isOpen: boolean, onClo
         </div>
         <div className=' w-[400px]'>
           {/* Image gallery */}
-          <Tab.Group as="div" className="flex flex-col-reverse">
-            {/* Image selector */}
-            <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
-              <Tab.List className="grid grid-cols-4 gap-6">
-                {imgList.map((image:any) => (
-                  <Tab
-                    key={image.filename}
-                    className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
-                  >
-                    {({selected}) => (
-                      <>
-                        <span className="absolute inset-0 overflow-hidden rounded-md">
-                          <img src={image.url} alt="" className="h-full w-full object-cover object-center"/>
-                        </span>
-                        <span
-                          className={classNames(
-                            selected ? 'ring-emerald-500' : 'ring-transparent',
-                            'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
-                          )}
-                          aria-hidden="true"
-                        />
-                      </>
-                    )}
-                  </Tab>
-                ))}
-              </Tab.List>
-            </div>
-
+          <Tab.Group as="div" className="flex flex-col-reverse" selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+            <Tab.List style={{display: 'none'}}>
+              {imgList.map((image:any, index:number) => (
+                <Tab>{index}</Tab>
+              ))}
+            </Tab.List>
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
               {imgList.map((image: any) => (
                 <Tab.Panel key={image.filename}>
-                  <img
-                    src={image.thumbnail_url}
-                    alt={''}
-                    className="h-full w-full object-cover object-center sm:rounded-lg"
-                  />
+                  <div key={image.filename} className={'w-full h-96 flex items-center justify-center bg-amber-100 box-bg'}>
+                    <img
+                      src={image.url}
+                      alt={''}
+                      className="max-w-full max-h-full"
+                    />
+                  </div>
                 </Tab.Panel>
               ))}
             </Tab.Panels>
           </Tab.Group>
+          <div className={'flex items-center justify-center pt-4'}>
+            <div className={'w-10 h-10 rounded-full bg-slate-100 cursor-pointer flex items-center mx-4 justify-center hover:bg-slate-200'} onClick={handleLeft}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                   stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+              </svg>
+            </div>
+            <div className={'w-10 h-10 rounded-full bg-slate-100 cursor-pointer flex items-center mx-4 justify-center hover:bg-slate-200'} onClick={handleRight}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                   stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+              </svg>
+            </div>
+          </div>
+          <div className={'w-full h-10 rounded-full text-center flex items-center justify-center bg-[#D2FF04] cursor-pointer mt-4'} onClick={downloadFile}>Download</div>
         </div>
 
 

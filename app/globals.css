@@ -11,6 +11,14 @@
   }
 }
 
+@font-face {
+  font-family: 'bodoni';
+  src: url("../public/font/Bodoni Seventytwo ITC Book Italic.otf");
+}
+.f-bodoni{
+  font-family: 'bodoni', sans-serif;
+}
+
 .box-bg{
   background: url("../public/bg.jpeg") center repeat;
 }
@@ -36,18 +44,19 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  animation: slideshow 21s infinite ease-in;
+  animation: slideshow 27s infinite ease-in;
 }
 
 @keyframes slideshow {
-  0% { background-image: url('../public/index/Logo.jpeg'); }
-  16% { background-image: url('../public/index/Logo-1.jpeg'); }
-  32% { background-image: url('../public/index/Logo-2.jpeg'); }
-  48% { background-image: url('../public/index/Logo-3.jpeg'); }
-  64% { background-image: url('../public/index/Logo-4.jpeg'); }
-  80% { background-image: url('../public/index/Logo-5.jpeg'); }
-  96% { background-image: url('../public/index/Logo-6.jpeg'); }
-  100% { background-image: url('../public/index/Logo.jpeg'); }
+  0% { background-image: url('../public/image/Property 1=Frame 1.png'); }
+  12.5% { background-image: url('../public/image/Property 1=Frame 2.png'); }
+  25% { background-image: url('../public/image/Property 1=Frame 3.png'); }
+  37.5% { background-image: url('../public/image/Property 1=Frame 4.png'); }
+  50% { background-image: url('../public/image/Property 1=Frame 5.png'); }
+  62.5% { background-image: url('../public/image/Property 1=Frame 6.png'); }
+  75% { background-image: url('../public/image/Property 1=Frame 7.png'); }
+  87.5% { background-image: url('../public/image/Property 1=Frame 8.png'); }
+  100% { background-image: url('../public/image/Property 1=Frame 1.png'); }
 }
 
 .text-generation-wrap{
@@ -56,4 +65,8 @@
 .bb-wrap{
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.5);
+}
+
+.nav-bar-btn:hover .active-icon{
+  opacity: 100;
 }

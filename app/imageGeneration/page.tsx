@@ -34,7 +34,7 @@ const ImageGeneration = () => {
   const [generationArr, setGenerationArr] = useState<any>([])
   const [generationLoaded, setGenerationLoaded] = useState<boolean>(false)
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const [showIndex, setShowIndex] = useState(0)
+  const [openIndex, setOpenIndex] = useState(0)
 
 
   const getFilenameFromUrl = (url: string) => {
@@ -281,6 +281,11 @@ const ImageGeneration = () => {
     link.click();
   }
 
+  const openGenerationPreview = (index:number) => {
+    setShowDialog(true)
+    setOpenIndex(index)
+  }
+
   useEffect(() => {
     if(imgKey){
       (async()=>{
@@ -304,15 +309,16 @@ const ImageGeneration = () => {
           <div className={'w-full h-4'}></div>
           <Link href={'/home'}>
             <div
-              className={'h-10 leading-10 px-2 flex items-center rounded-lg border text-sm text-white bg-[#333249] border-[#1F1E30] hover:text-[#D2FF04] hover:border-black cursor-pointer'}>
+              className={'nav-bar-btn h-10 leading-10 px-2 flex items-center rounded-lg border text-sm text-white bg-[#333249] border-[#1F1E30] hover:text-[#D2FF04] hover:border-black cursor-pointer'}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                    stroke="currentColor"
                    className="w-6 h-6 mr-2 inline-block">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
               </svg>
 
-              <div className="w-6 h-6 mr-2 inline-block">
-                <Image src={'/icon/imagegeneration_big.png'} alt={''} width={24} height={24} />
+              <div className="w-6 h-6 mr-2 inline-block relative">
+                <Image src={'/icon/imagegeneration_big.svg'} alt={''} width={24} height={24} />
+                <Image src={'/icon/imagegeneration_click.svg'} alt={''} width={24} height={24} className={'active-icon absolute left-0 top-0 opacity-0'} />
               </div>
               Image Generation
             </div>
@@ -415,9 +421,7 @@ const ImageGeneration = () => {
                 {
                   generationArr.map((item:any, index:number)=>{
                     return (
-                      <div key={item.url} className={'bg-[#41405C] rounded p-1 text-center cursor-pointer'} onClick={()=>{
-                        downloadFile(item.url);
-                      }}>
+                      <div key={item.url} className={'bg-[#41405C] rounded p-1 text-center cursor-pointer'} onClick={()=>{openGenerationPreview(index)}}>
                         <Image src={item.url} alt={''} width={256} height={256} className={'rounded'} />
                       </div>
                     )
@@ -427,7 +431,9 @@ const ImageGeneration = () => {
             </div> : null
         }
       </div>
-      <Preview imgList={generationArr} isOpen={showDialog} onClose={()=>{setShowDialog(false)}} />
+      {
+        showDialog ? <Preview initIndex={openIndex} imgList={generationArr} isOpen={showDialog} onClose={()=>{setShowDialog(false)}} /> : null
+      }
     </>
   )
 }
