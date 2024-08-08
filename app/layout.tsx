@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
     <head>
-      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%201.16e0f27e.png"/>
+      <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%201.33996d24.png"/>
       <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%202.c7ffb5af.png"/>
       <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%203.7255d0a6.png"/>
       <link rel="preload" as="image" href="https://bost.qdkf.net/_next/static/media/Property%201=Frame%204.25bf89ee.png"/>
