@@ -34,7 +34,7 @@ export default function Home() {
                 <div className={'absolute top-2/4 right-0 bg-gray-500 w-5/12 h-px z-z-0'}></div>
                 OR
               </div>
-              <Link href={'/backgroundRemover'} className={'flex cursor-pointer items-center justify-center mx-auto w-40 h-10 bg-[#D2FF04] rounded-full'}>
+              <Link href={'/imageGeneration'} className={'flex cursor-pointer items-center justify-center mx-auto w-40 h-10 bg-[#D2FF04] rounded-full'}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                      stroke="currentColor" className="size-5 mr-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
