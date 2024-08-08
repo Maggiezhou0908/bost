@@ -49,8 +49,8 @@ export default function Index(){
       </div>
       <div className="w-auto h-screen slideshow relative box-border">
         <div className={'absolute top-2/3 left-0 right-0 flex items-center justify-center'}>
-          <div className={'px-4 w-[540px] h-[37px]'}>
-            <div className={'f-bodoni text-4xl text-center'}>your productivity, efficiency, quality</div>
+          <div className={'px-4 w-[880px] h-[37px]'}>
+            <div className={'f-bodoni text-6xl text-center'}>your productivity, efficiency, quality</div>
             <div className={'text-2xl my-4 text-black text-center uppercase'}>With AI e-commerce Marketing tool</div>
             <Link href={'/home'} >
               <div className={'w-40 h-12 leading-none text-center mx-auto shrink-0 bg-black rounded-full text-white flex items-center justify-center'}>Try It Now</div>
@@ -110,21 +110,21 @@ export default function Index(){
         <div className={'flex justify-center items-center w-[1088px] mx-auto pt-6 pb-12'}>
           <div className={'mr-4'}>
             <div className={'text-[#D2FF04] text-8xl text-center f-bodoni'}>01</div>
-            <div className={'text-black text-2xl uppercase text-center'}>Select a</div>
-            <div className={'text-black text-2xl uppercase text-center'}>transparent image</div>
-            <div className={'text-black text-base text-center'}>Select the image from which you have removed the background.</div>
+            <div className={'text-black text-2xl uppercase text-center'}>UPLOAD</div>
+            <div className={'text-black text-2xl uppercase text-center'}>an image</div>
+            <div className={'text-black text-base text-center'}>Choose the image from your device and drag it into Boost.</div>
           </div>
           <div className={'mx-4'}>
             <div className={'text-[#D2FF04] text-8xl text-center f-bodoni'}>02</div>
-            <div className={'text-black text-2xl uppercase text-center'}>CHOOSE</div>
-            <div className={'text-black text-2xl uppercase text-center'}>A style and scence</div>
-            <div className={'text-black text-base text-center'}>Choose the style and scene that suits your product</div>
+            <div className={'text-black text-2xl uppercase text-center'}>Remove</div>
+            <div className={'text-black text-2xl uppercase text-center'}>Background</div>
+            <div className={'text-black text-base text-center'}>Boost will eliminate the background in just a few seconds.</div>
           </div>
           <div className={'ml-4'}>
             <div className={'text-[#D2FF04] text-8xl text-center f-bodoni'}>03</div>
             <div className={'text-black text-2xl uppercase text-center'}>Create</div>
             <div className={'text-black text-2xl uppercase text-center'}>Image with AI</div>
-            <div className={'text-black text-base text-center'}>Boots Create photos with perfect lighting, reflections and shadows</div>
+            <div className={'text-black text-base text-center'}>Boost creates backgrounds with ideal lighting, reflections, and shadows.</div>
           </div>
         </div>
         <div className={'pb-24'}>
