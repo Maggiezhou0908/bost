@@ -202,7 +202,7 @@ export default function Index(){
         </div>
       </div>
       <div className="w-auto bg-black" id={'CaseStudy'}>
-        <div className={'text-6xl text-white text-center uppercase font-bold pt-24'}>case study</div>
+        <div className={'text-6xl text-[#FF7BCA] text-center uppercase font-bold pt-24'}>case study</div>
         <div className={'text-6xl text-white text-center uppercase'}>Create Product Images and</div>
         <div className={'text-6xl text-white text-center uppercase'}>TEXT Content with AI</div>
         <div className={'text-6xl text-white text-center uppercase'}>in seconds.</div>

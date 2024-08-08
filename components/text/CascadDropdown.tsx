@@ -42,7 +42,7 @@ const CascadDropdown = ( {onChange}:{onChange: (val:any) => void }) => {
 
     return (
         <div className="relative z-50" ref={dropdownRef}>
-            <div className='text-sm border rounded-md pl-3 flex items-center'>
+            <div className='text-sm bg-[#333249] rounded-md pl-3 flex items-center'>
                 <span className='pr-3 border-r mr-3 text-white'>productTypes</span>
                 <div onClick={() => setIsOpen(!isOpen)} className="py-3 text-white flex items-center gap-2">
                     {selectedOption || "selectProductType"}

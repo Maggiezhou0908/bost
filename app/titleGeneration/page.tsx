@@ -120,8 +120,8 @@ export default function TitleGeneration() {
           <div className={'text-white text-sm'}>Text Generation</div>
           <form onSubmit={handleSubmit}>
             <div className="pt-4">
-              <div className="border-b border-gray-900/10 pb-6">
-                <h2 className="text-base font-semibold leading-7 text-white">choose the e commence platform<span
+              <div className="border-b border-gray-900/10 pb-2">
+                <h2 className="text-base font-semibold leading-7 text-white">Choose the e commence platform<span
                   className="text-red-500">*</span></h2>
 
                 <RadioGroup value={selectedColor} onChange={setSelectedColor}>
@@ -153,7 +153,7 @@ export default function TitleGeneration() {
               <div className="border-b border-gray-900/10 pb-12 mt-3">
                 <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
                   <div className="col-span-full">
-                    <label htmlFor="skuname" className="block text-sm font-medium leading-6 text-white">product category<span
+                    <label htmlFor="skuname" className="block text-sm font-medium leading-6 text-white">Product category<span
                       className="text-red-500">*</span>
                     </label>
                     <div className="mt-2">
@@ -165,18 +165,18 @@ export default function TitleGeneration() {
 
                   <div className="col-span-full">
                     <label htmlFor="productname"
-                           className="block text-sm font-medium leading-6 text-white">product name<span
+                           className="block text-sm font-medium leading-6 text-white">Product name<span
                       className="text-red-500">*</span>
                     </label>
                     <div className="mt-2">
                       <div
-                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 max-w">
+                        className="flex rounded-md bg-[#333249] max-w">
                         <input
                           type="text"
                           name="product_name"
                           id="product_name"
                           autoComplete="productname"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-[#9190A2] focus:ring-0 sm:text-sm sm:leading-6"
                           placeholder="exp: Hair dryer"
                         />
                       </div>
@@ -185,16 +185,16 @@ export default function TitleGeneration() {
 
                   <div className="col-span-full">
                     <label htmlFor="advantages" className="block text-sm font-medium leading-6 text-white">
-                      the advantage of product<span className="text-red-500">*</span>
+                      The advantage of product<span className="text-red-500">*</span>
                     </label>
                     <div className="mt-2">
                       <div
-                        className="text-white rounded-md py-1.5 px-3  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-60">
+                        className="text-white rounded-md placeholder:text-gray-400 bg-[#333249]">
                       <textarea
                         id="advantages"
                         name="advantages"
                         rows={3}
-                        className="block w-full border-00 bg-transparent"
+                        className="block w-full border-0 py-1.5 px-3 bg-transparent text-sm placeholder:text-[#9190A2]"
                         placeholder={'Please enter the advantages of your product, such as cost-effectiveness and good quality.'}
                       />
                       </div>
@@ -207,13 +207,13 @@ export default function TitleGeneration() {
                     </label>
                     <div className="mt-2">
                       <div
-                        className="flex rounded-md  ring-1 ring-inset ring-gray-300 max-w">
+                        className="flex rounded-md bg-[#333249] max-w">
                         <input
                           type="text"
                           name="keywords"
                           id="keywords"
                           autoComplete="keywords"
-                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-gray-400"
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-sm text-white placeholder:text-[#9190A2]"
                           placeholder="Enter the keywords you want to rank for. Use commas to separate them."
                         />
                       </div>
@@ -229,7 +229,7 @@ export default function TitleGeneration() {
                         id="tone"
                         name="tone"
                         autoComplete="tone-name"
-                        className="block w-full rounded-md border-0 py-1.5 pl-1  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 max-w sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-1 bg-[#333249] text-[#9190A2] max-w sm:text-sm sm:leading-6"
                       >
                         <option>specialty</option>
                         <option>humor</option>
@@ -247,7 +247,7 @@ export default function TitleGeneration() {
                         id="languagewrit"
                         name="languagewrit"
                         autoComplete="languagewrit-name"
-                        className="block w-full rounded-md border-0 py-1.5 pl-1  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green-600 max-w sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-1 bg-[#333249] text-[#9190A2] max-w sm:text-sm sm:leading-6"
                       >
                         <option>english</option>
                         <option>chinese</option>

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import {Navbar} from "@/components/Navbar";
 import {PageWarp} from "@/components/PageWarp";
 
@@ -17,6 +18,9 @@ export default function About() {
             the visual appeal and informational efficiency of product displays, helping small and micro businesses
             improve their operational efficiency, reduce manpower and financial investments, and stand out in a
             competitive market.
+          </div>
+          <div className={'w-[960px] mx-auto my-6 flex items-center justify-center'}>
+            <Image src={'/about.jpg'} width={960} height={646} alt={''} />
           </div>
         </PageWarp>
       </div>
