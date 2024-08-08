@@ -45,7 +45,7 @@ export default function Home() {
           </div>
 
           <div className={'mb-6'}>
-            <div className={'text-white text-sm mb-4'}>Image Editor</div>
+            <div className={'text-white text-sm mb-4'}>Image Generator</div>
             <div className={'flex'}>
               <div className={'mr-4'}>
                 <Link href={'/backgroundRemover'}>
@@ -69,7 +69,7 @@ export default function Home() {
           </div>
 
           <div className={'mb-6'}>
-            <div className={'text-white text-sm mb-4'}>Text Editor</div>
+            <div className={'text-white text-sm mb-4'}>Text Generator</div>
             <div className={'flex'}>
               <div className={'mr-4'}>
                 <Link href={'/titleGeneration'}>

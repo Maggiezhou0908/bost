@@ -29,11 +29,11 @@ export default function Index(){
                 </Link>
                 <Link href='/#ImageEditor'
                       className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-black">
-                  Image Editor
+                  Image Generator
                 </Link>
                 <Link href='/#TextEditor'
                       className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-black">
-                  Text Editor
+                  Text Generator
                 </Link>
                 <Link href='/#CaseStudy'
                       className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-black">
@@ -89,7 +89,7 @@ export default function Index(){
         </div>
       </div>
       <div className="w-auto bg-[#00BEFC]" id={'ImageEditor'}>
-        <div className={'text-6xl text-black text-center uppercase pt-24 pb-16 font-bold'}>Image Editor</div>
+        <div className={'text-6xl text-black text-center uppercase pt-24 pb-16 font-bold'}>Image Generator</div>
         <div className={'flex w-[1000px] mx-auto pb-16'}>
           <div className={'flex-1'}>
             <div className={'text-6xl'}>REMOVE</div>
@@ -153,7 +153,7 @@ export default function Index(){
         </div>
       </div>
       <div className="w-auto bg-[#9648FF]" id={'TextEditor'}>
-        <div className={'text-6xl text-white text-center uppercase font-bold pt-24'}>TEXT Editor</div>
+        <div className={'text-6xl text-white text-center uppercase font-bold pt-24'}>TEXT Generator</div>
         <div className={'text-2xl text-white text-center uppercase font-bold py-6'}>Make Powerful content with AI writer
           in SECONDS
         </div>
@@ -239,7 +239,7 @@ export default function Index(){
       </div>
       <div className="w-auto bg-[#FF7BCA]">
         <div className={'text-6xl text-black text-center uppercase font-bold pt-24'}>GROW your BUsiness with AI</div>
-        <div className={'text-8xl text-black text-center uppercase py-8'}>2,354,620</div>
+        <div className={'text-8xl text-black text-center uppercase font-bold py-8'}>2,354,620</div>
         <div className={'text-2xl text-black text-center uppercase pb-16'}>AI Photos Generated in the past 3 months.</div>
         <div className={'w-[1088px] h-[529px] bb-wrap mx-auto flex items-center'}>
           <div className={'uppercase w-80'}>

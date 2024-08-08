@@ -177,7 +177,7 @@ export default function TitleGeneration() {
                           id="product_name"
                           autoComplete="productname"
                           className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-white placeholder:text-[#9190A2] focus:ring-0 sm:text-sm sm:leading-6"
-                          placeholder="exp: Hair dryer"
+                          placeholder="Example: Hair dryer"
                         />
                       </div>
                     </div>

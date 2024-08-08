@@ -38,7 +38,7 @@ export function Sidebar() {
           Generation history
         </div>
       </Link>
-      <div className={'text-white text-sm mb-4'}>Image Editor</div>
+      <div className={'text-white text-sm mb-4'}>Image Generator</div>
       <Link href={'/backgroundRemover'}>
         <div className={getActiveClass('/backgroundRemover')}>
           <div className="w-6 h-6 mr-2 inline-block relative">
@@ -57,7 +57,7 @@ export function Sidebar() {
           Image Generation
         </div>
       </Link>
-      <div className={'text-white text-sm mb-4'}>Text Editor</div>
+      <div className={'text-white text-sm mb-4'}>Text Generator</div>
       <Link href={'/titleGeneration'}>
         <div className={getActiveClass('/titleGeneration')}>
           <div className="w-6 h-6 mr-2 inline-block relative">
