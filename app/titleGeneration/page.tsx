@@ -231,9 +231,9 @@ export default function TitleGeneration() {
                         autoComplete="tone-name"
                         className="block w-full rounded-md border-0 py-1.5 pl-1 bg-[#333249] text-[#9190A2] max-w sm:text-sm sm:leading-6"
                       >
-                        <option>specialty</option>
-                        <option>humor</option>
-                        <option>enthusiasm</option>
+                        <option>Specialty</option>
+                        <option>Humor</option>
+                        <option>Enthusiasm</option>
                       </select>
                     </div>
                   </div>
@@ -249,9 +249,9 @@ export default function TitleGeneration() {
                         autoComplete="languagewrit-name"
                         className="block w-full rounded-md border-0 py-1.5 pl-1 bg-[#333249] text-[#9190A2] max-w sm:text-sm sm:leading-6"
                       >
-                        <option>english</option>
-                        <option>chinese</option>
-                        <option>french</option>
+                        <option>English</option>
+                        <option>Chinese</option>
+                        <option>French</option>
                       </select>
                     </div>
                   </div>

@@ -352,7 +352,7 @@ const ImageGeneration = () => {
                   'mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
                   'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
                 )}
-                placeholder={'exp: bag'}
+                placeholder={'Example: bag'}
                 ref={whatToSelectPrompt}
               />
             </Field>
@@ -366,7 +366,7 @@ const ImageGeneration = () => {
                   'mt-3 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
                   'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
                 )}
-                placeholder={'exp: bag on the grass with lots of flowers next to it, sunny day'}
+                placeholder={'Example: bag on the grass with lots of flowers next to it, sunny day'}
                 rows={2}
                 ref={backgroundPrompt}
               />
