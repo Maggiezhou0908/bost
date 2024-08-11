@@ -345,7 +345,7 @@ const ImageGeneration = () => {
           }
           <div className="w-full max-w-md">
             <Field>
-              <Label className="text-sm/6 font-medium text-white">What to select</Label>
+              <Label className="text-sm/6 font-medium text-white">Product Category</Label>
               {/*<Description className="text-sm/6 text-white/50">Please use one word to describe the content of your main image.</Description>*/}
               <Input
                 className={classNames(
