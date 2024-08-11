@@ -1,10 +1,22 @@
 boost
 
-pnpm install
-npm i -g vercel
----
+Operating environment requirements
+please use 
+nodejs v20+
+pnpm v9+
+vercel v35+
 
-get env
+Install dependencies
+```shell
+pnpm install
+```
+
+install vercel cli
+```shell
+npm i -g vercel
+```
+
+get env(OR use .env.local)
 ```shell
 vercel env --pull
 ```
