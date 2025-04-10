@@ -30,6 +30,7 @@ export default function RootLayout({
       {children}
         <Toaster/>
       </>
+      <script defer src="https://umami.qdkf.net/script.js" data-website-id="41153c60-a307-4987-a01e-c17a1433cfcb"></script>
     </body>
     </html>
   )
