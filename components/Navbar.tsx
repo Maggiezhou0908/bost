@@ -38,9 +38,9 @@ export function Navbar() {
                   <Link href='/home' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     Home
                   </Link>
-                  <Link href='/about' className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
+                  <a href='https://wavesfuture.com' target="_blank" className="relative inline-flex items-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold text-amber-900 text-white">
                     About Us
-                  </Link>
+                  </a>
                 </div>
                 <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center pr-8">
                   {/* Profile dropdown */}
