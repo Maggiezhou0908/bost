@@ -51,7 +51,7 @@ export default function Index(){
         <div className={'absolute top-2/3 left-0 right-0 flex items-center justify-center'}>
           <div className={'px-4 w-[880px] h-[37px]'}>
             <div className={'f-bodoni text-6xl text-center'}>your productivity, efficiency, quality</div>
-            <div className={'text-2xl my-4 text-black text-center uppercase'}>With AI e-commerce Image and text Generator</div>
+            <div className={'text-2xl my-4 text-black text-center uppercase'}>WITH AI-POWERED E-COMMERCE DESIGN PLATFORM</div>
             <Link href={'/home'} >
               <div className={'w-40 h-12 leading-none text-center mx-auto shrink-0 bg-black rounded-full text-white flex items-center justify-center'}>Try It Now</div>
             </Link>
