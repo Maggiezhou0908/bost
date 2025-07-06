@@ -141,7 +141,7 @@ export default function Index(){
         <div className={'text-6xl text-black text-center uppercase font-bold'}>more attractive</div>
         <div className={'text-6xl text-black text-center uppercase pb-16 font-bold'}>scenes everyone likes</div>
         <div className={'w-[1087px] mx-auto pb-16'}>
-          <Image src={'/image/imageeditor3.png'} alt={''} width={1087} height={1080} unoptimized={true}/>
+          <Image src={'/image/1111.png'} alt={''} width={1087} height={1080} unoptimized={true}/>
         </div>
         <div className={'pb-24'}>
           <Link href={'/imageGeneration'}>
